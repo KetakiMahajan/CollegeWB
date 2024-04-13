@@ -21,7 +21,7 @@
           </div>
 
           <div class="card-body">
-          <form action='teacher/teacher_dashboard.php' method='post' >
+          <form action='student/student_dashboard.php' method='post' >
               <div class="form-group">
                 <label for="student-id">Student ID</label>
                 <input type="student-id" class="form-control" id="student-id" aria-describedby="student-idHelp" placeholder="Enter student-id">

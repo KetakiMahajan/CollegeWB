@@ -41,7 +41,7 @@
 
               <div class="form-group">
                 <label for="teacher_id">Teacher Id</label>
-                <input type="text" name='id' class="form-control" id="teacher_id" aria-describedby="teacher_idHelp" placeholder="Enter Teacher Id">
+                <input type="text" name='teacher_id' class="form-control" id="teacher_id" aria-describedby="teacher_idHelp" placeholder="Enter Teacher Id">
                 
               </div>
            

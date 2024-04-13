@@ -1,3 +1,17 @@
+<?php
+session_start();
+if(!isset($_SESSION['admin']))
+{
+    echo "<script>
+        alert('you are not valid user!! please login to continue');
+        window.location = '../adminlogin.php';
+    </script>";
+}
+     
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,6 +44,10 @@
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="index.php" class="nav-link">Home</a>
                 </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                <a href="../logout.php" class="nav-link">log out</a>
+                </li>
+                
             </ul>
 
             <!-- Right navbar links -->

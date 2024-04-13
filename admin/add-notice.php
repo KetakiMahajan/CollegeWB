@@ -131,26 +131,11 @@ if(!isset($_SESSION['admin']))
                                         d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z" />
                                 </svg>
                                 <p>
-                                    Manage Notices
-                                    <i class="right fas fa-angle-left"></i>
+                                    Add Notice
                                 </p>
                             </a>
 
-                            <!-- <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="./index.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Public Notice</p>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a href="./index2.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Private Notice</p>
-                                    </a>
-                                </li>
-                            </ul> -->
+                           
                         </li>
 
 

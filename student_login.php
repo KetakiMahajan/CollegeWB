@@ -1,7 +1,33 @@
-<!DOCTYPE html>
+<?php
+session_start();
+include "db.php";
+if(isset($_POST['submit']))
+{
+  extract($_POST);
+  $q="select * from students where student_id = '$student_id'";
+  $result = mysqli_query($conn,$q);
+  if(mysqli_num_rows($result)>=1)
+  {
+    $student = mysqli_fetch_array($result);
+    $_SESSION['student'] = $student;
+    echo "<script> 
+          alert('log in sucessful');
+          window.location = 'student/student_dashboard.php';
+    </script>";
+  }
+  else{
+    echo "<script>                                            
+          alert('username or password incorrect');
+          window.location = 'student_login.php'                                                       ;
+    </script>";
+  }
+}                                       
+?>
+
+<!DOCTYPE html>                                                                                                                                                                                                                                      
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8">                                            
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
   <!-- Bootstrap CSS -->
@@ -21,15 +47,11 @@
           </div>
 
           <div class="card-body">
-          <form action='student/student_dashboard.php' method='post' >
+
+          <form action='' method='post' >
               <div class="form-group">
                 <label for="student-id">Student ID</label>
-                <input type="student-id" class="form-control" id="student-id" aria-describedby="student-idHelp" placeholder="Enter student-id">
-              </div>
-
-              <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Password">
+                <input type="student-id" class="form-control" name="student_id" id="student-id" aria-describedby="student-idHelp" placeholder="Enter student-id">
               </div>
 
               <div class="form-group form-check">
@@ -42,7 +64,7 @@
                 <a href="#">Forgot password?</a>
               </div>
              </div>
-              <button type="submit" class="btn btn-primary btn-block">Login</button>
+              <button type="submit" name="submit" class="btn btn-primary btn-block">Login</button>
             </form>
           </div>
           <div class="card-footer text-center">

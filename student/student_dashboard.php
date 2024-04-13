@@ -1,3 +1,15 @@
+<?php
+session_start();
+if(!isset($_SESSION['student']))
+{
+    echo "<script>
+        alert('you are not valid user!! please login to continue');
+        window.location = '../student_login.php';
+    </script>";
+}
+     
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -236,3 +248,8 @@
 </body>
 
 </html
+
+
+
+
+

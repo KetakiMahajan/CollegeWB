@@ -69,7 +69,7 @@ if(!isset($_SESSION['student']))
                 </li>
                 <!-- Logout button -->
                 <div class="logout-button">
-                    <button class="btn btn-danger">Logout</button>
+                    <a  href='../logout.php'class="btn btn-danger">Logout</a>
                 </div>
             </ul>
         </nav>

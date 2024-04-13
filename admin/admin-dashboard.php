@@ -124,7 +124,7 @@ if(!isset($_SESSION['admin']))
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                         <li class="nav-item">
-                            <a href="#" class="nav-link text-white">
+                            <a href="add-notice.php" class="nav-link text-white">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                                     class="bi bi-calendar4" viewBox="0 0 16 16">
                                     <path
@@ -136,7 +136,7 @@ if(!isset($_SESSION['admin']))
                                 </p>
                             </a>
 
-                            <ul class="nav nav-treeview">
+                            <!-- <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="./index.html" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
@@ -150,7 +150,7 @@ if(!isset($_SESSION['admin']))
                                         <p>Private Notice</p>
                                     </a>
                                 </li>
-                            </ul>
+                            </ul> -->
                         </li>
 
 

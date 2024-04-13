@@ -1,8 +1,28 @@
-<?PHP
-
-
+<?php
+session_start();
+include "db.php";
+if(isset($_POST['submit']))
+{
+  extract($_POST);
+  $q="select * from admin where email = '$email' and password='$password'";
+  $result = mysqli_query($conn,$q);
+  if(mysqli_num_rows($result)>=1)
+  {
+    $admin = mysqli_fetch_array($result);
+    $_SESSION['admin'] = $admin;
+    echo "<script> 
+          alert('log in sucessful');
+          window.location = 'admin/admin-dashboard.php';
+    </script>";
+  }
+  else{
+    echo "<script>                                            
+          alert('username or password incorrect');
+          window.location = 'adminlogin.php'                                                       ;
+    </script>";
+  }
+}      
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,7 +45,7 @@
             Admin Login
           </div>
           <div class="card-body">
-            <form action='admin/admin-dashboard.php' method='post' >
+            <form action='' method='post' >
               <div class="form-group">
                 <label for="email">Email address</label>
                 <input type="email" name='email' class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">

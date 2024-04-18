@@ -1,5 +1,6 @@
 <?php
 session_start();
+include '../db.php';
 if(!isset($_SESSION['admin']))
 {
     echo "<script>
@@ -7,7 +8,41 @@ if(!isset($_SESSION['admin']))
         window.location = '../adminlogin.php';
     </script>";
 }
-     
+if(isset($_POST['submit'])){
+  extract($_POST);
+  $teacher_id=$_SESSION['admin']['id'];
+  $uploadDir = "attachments/";
+
+  // Check if the directory exists, if not, create it
+  if(!file_exists($uploadDir)){
+      mkdir($uploadDir, 0777, true);
+  }
+
+  // Get the uploaded file information
+  $fileName = $_FILES['file']['name'];
+  $fileTmpName = $_FILES['file']['tmp_name'];
+  $fileSize = $_FILES['file']['size'];
+  $fileType = $_FILES['file']['type'];
+  $fileError = $_FILES['file']['error'];
+
+  // Check if file was uploaded without any errors
+  if($fileError === 0){
+      // Move the uploaded file to the desired location
+      $destination = $uploadDir . $fileName;
+      move_uploaded_file($fileTmpName, $destination);
+  }  
+  $sql="insert into `notices` (creation_date,notice_title,class_id,notice_msg,attachment,teacher_id,visibility) values('NOW()','$notice_title','$class_id','$notice_msg','$destination','$teacher_id','$visibility')";
+
+  $result=mysqli_query($conn,$sql);
+  if($result)
+  {
+    echo "<script>alert('Notice Added.');</script>";
+  }
+  else
+  {
+    echo "<script>alert('Something went wrong! plese try again.');</script>";
+  }
+}    
 ?>
 
 
@@ -224,19 +259,24 @@ if(!isset($_SESSION['admin']))
 
                     <div class="container mt-5">
                         <h2>Add Notice</h2>
-                        <form>
+                        <form action="" method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="title">Title:</label>
-                                <input type="text" class="form-control" id="title" name="title" required>
+                                <input type="text" class="form-control" id="title" name="notice_title" required>
                             </div>
                             <div class="form-group">
+                                <?php
+                                 $sql1="select * from `class`";
+                                 $result1=mysqli_query($conn,$sql1);
+                                ?>
                                 <label for="class">Class:</label>
-                                <select class="form-control" id="class" name="class" required>
-                                    <option value="">Select Class</option>
-                                    <option value="class1">SE</option>
-                                    <option value="class2">TE</option>
-                                    <option value="class2">BE</option>
-                                    <option value="class2">All</option>
+                                <select class="form-control" id="class" name="class_id" required>
+                                    <?php
+                                        while($row=mysqli_fetch_array($result1))
+                                        {
+                                            echo "<option value='".$row['id']."'>".$row['class']."</option>";
+                                        }
+                                    ?>
                                     <!-- Add more options as needed -->
                                 </select>
                             </div>
@@ -250,7 +290,7 @@ if(!isset($_SESSION['admin']))
                             </div>
                             <div class="form-group">
                                 <label for="notice">Notice:</label>
-                                <textarea class="form-control" id="notice" name="notice" rows="5" required></textarea>
+                                <textarea class="form-control" id="notice" name="notice_msg" rows="5" required></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="attachment">Attachment (PDF):</label>
@@ -258,7 +298,7 @@ if(!isset($_SESSION['admin']))
                                     accept=".pdf">
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary" name="submit">Submit</button>
                         </form>
                     </div>
 

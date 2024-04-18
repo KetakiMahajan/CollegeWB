@@ -64,7 +64,7 @@
             <div class="carousel-caption d-none d-md-block">
               <h3>Welcome to Computer Department</h3>
               <p>Students can Login here</p>
-              <a href="/login.html" class="btn btn-primary">Student Login</a>
+              <a href="student_login.php" class="btn btn-primary">Student Login</a>
             </div>
           </div>
         </div>

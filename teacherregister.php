@@ -1,3 +1,48 @@
+<?php
+include 'db.php';
+
+if(isset($_POST['signup'])){
+  $name=$_POST['name'];
+  $mobile=$_POST['mobile'];
+  $email=$_POST['email'];
+  $gender=$_POST['gender'];
+  $teacher_id=$_POST['teacher_id'];
+  $password=$_POST['password'];
+  $cpassword=$_POST['cpassword'];
+
+  $sql="select * from `teachers` where email= '$email' and password='$password'";
+
+  $result=mysqli_query($conn,$sql);
+  if(mysqli_num_rows($result)>0){
+    echo "<script> 
+    alert('email already exist');
+    window.location = '.../teacherlogin.php';
+    </script>";
+    }else{
+      if($password===$cpassword){
+        // $password=md5('password');
+      $sql="insert into `teachers`(name,mobile,email,gender,teacher_id,password)
+      values('$name','$mobile','$email','$gender','$teacher_id','$password')";
+      $result=mysqli_query($conn,$sql);
+      if($result){
+        echo "<script> 
+        alert('signup sucessful');
+        window.location = '.../teacherlogin.php';
+        </script>";
+      }
+      }else
+      {
+        echo "<script> 
+        alert('password did not match');
+        window.location = '.../teacherregister.php';
+        </script>";
+      }
+      
+    }
+ 
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,6 +85,12 @@
               </div>
 
               <div class="form-group">
+                <label for="">Gender</label>
+                <input type="text" name='gender' class="form-control" id="gender" aria-describedby="" placeholder="">
+                
+              </div>
+
+              <div class="form-group">
                 <label for="teacher_id">Teacher Id</label>
                 <input type="text" name='teacher_id' class="form-control" id="teacher_id" aria-describedby="teacher_idHelp" placeholder="Enter Teacher Id">
                 
@@ -52,7 +103,7 @@
 
               <div class="form-group">
                 <label for="cpassword">Confirm Password</label>
-                <input type="password" class="form-control" id="cpassword" placeholder="Confirm Password">
+                <input type="password" class="form-control" name="cpassword" placeholder="Confirm Password">
               </div>
               
               <div class="form-group form-check">
@@ -67,7 +118,7 @@
                 <a href="#">Forgot password?</a>
               </div>
              </div>
-              <button type="submit" class="btn btn-primary btn-block">Login</button>
+              <button type="submit" name="signup" class="btn btn-primary btn-block">Signup</button>
             </form>
           </div>
           <div class="card-footer text-center">

@@ -1,3 +1,3 @@
 <?php
-$conn = mysqli_connect('localhost','root','','collegewb');
+$conn = mysqli_connect('localhost','root','','studentntc');
 ?>

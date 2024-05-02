@@ -40,7 +40,7 @@ if(isset($_POST['submit'])){
   }
   else
   {
-    echo "<script>alert('Something went wrong! plese try again.');</script>";
+    echo "<script>alert('Something went wrong! please try again.');</script>";
   }
 }    
 ?>

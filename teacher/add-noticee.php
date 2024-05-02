@@ -1,5 +1,6 @@
-<!-- <?php
+<?php
 session_start();
+include '../db.php';
 if(!isset($_SESSION['admin']))
 {
     echo "<script>
@@ -7,8 +8,42 @@ if(!isset($_SESSION['admin']))
         window.location = '../adminlogin.php';
     </script>";
 }
-     
-?> -->
+if(isset($_POST['submit'])){
+  extract($_POST);
+  $teacher_id=$_SESSION['admin']['id'];
+  $uploadDir = "attachments/";
+
+  // Check if the directory exists, if not, create it
+  if(!file_exists($uploadDir)){
+      mkdir($uploadDir, 0777, true);
+  }
+
+  // Get the uploaded file information
+  $fileName = $_FILES['file']['name'];
+  $fileTmpName = $_FILES['file']['tmp_name'];
+  $fileSize = $_FILES['file']['size'];
+  $fileType = $_FILES['file']['type'];
+  $fileError = $_FILES['file']['error'];
+
+  // Check if file was uploaded without any errors
+  if($fileError === 0){
+      // Move the uploaded file to the desired location
+      $destination = $uploadDir . $fileName;
+      move_uploaded_file($fileTmpName, $destination);
+  }  
+  $sql="insert into `notices` (creation_date,notice_title,class_id,notice_msg,attachment,teacher_id,visibility) values('NOW()','$notice_title','$class_id','$notice_msg','$destination','$teacher_id','$visibility')";
+
+  $result=mysqli_query($conn,$sql);
+  if($result)
+  {
+    echo "<script>alert('Notice Added.');</script>";
+  }
+  else
+  {
+    echo "<script>alert('Something went wrong! please try again.');</script>";
+  }
+}    
+?>
 
 
 
@@ -21,8 +56,7 @@ if(!isset($_SESSION['admin']))
     <title>Computer Department || Teacher</title>
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
@@ -59,8 +93,7 @@ if(!isset($_SESSION['admin']))
                     <div class="navbar-search-block">
                         <form class="form-inline">
                             <div class="input-group input-group-sm">
-                                <input class="form-control form-control-navbar" type="search" placeholder="Search"
-                                    aria-label="Search">
+                                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
                                 <div class="input-group-append">
                                     <button class="btn btn-navbar" type="submit">
                                         <i class="fas fa-search"></i>
@@ -87,8 +120,7 @@ if(!isset($_SESSION['admin']))
             <!-- Brand Logo -->
             <a style='display:flex;gap:1vw' href="index3.html" class="brand-link">
                 <img src="./images/collagelogo.jpg" alt="" style='height:4vw;border-radius:50%'>
-                <span style='letter-spacing:1px;line-height:1.5vw;margin-top:0.5vw'
-                    class="brand-text font-weight-light">Computer <br> Department</span>
+                <span style='letter-spacing:1px;line-height:1.5vw;margin-top:0.5vw' class="brand-text font-weight-light">Computer <br> Department</span>
             </a>
 
             <!-- Sidebar -->
@@ -106,8 +138,7 @@ if(!isset($_SESSION['admin']))
                 <!-- SidebarSearch Form -->
                 <div class="form-inline">
                     <div class="input-group" data-widget="sidebar-search">
-                        <input class="form-control form-control-sidebar" type="search" placeholder="Search"
-                            aria-label="Search">
+                        <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
                         <div class="input-group-append">
                             <button class="btn btn-sidebar">
                                 <i class="fas fa-search fa-fw"></i>
@@ -119,34 +150,28 @@ if(!isset($_SESSION['admin']))
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
 
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                         <li class="nav-item">
                             <a href="add-noticee.php" class="nav-link text-white">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
-                                    class="bi bi-calendar4" viewBox="0 0 16 16">
-                                    <path
-                                        d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z" />
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-calendar4" viewBox="0 0 16 16">
+                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z" />
                                 </svg>
                                 <p>
-                                   Add Notice
+                                    Add Notice
                                 </p>
                             </a>
                         </li>
 
 
-                        
+
 
                         <li class="nav-item">
                             <a href="#" class="nav-link text-white">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
-                                    class="bi bi-mortarboard-fill" viewBox="0 0 16 16">
-                                    <path
-                                        d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917z" />
-                                    <path
-                                        d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466z" />
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-mortarboard-fill" viewBox="0 0 16 16">
+                                    <path d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917z" />
+                                    <path d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466z" />
                                 </svg>
                                 <p>
                                     Students Details
@@ -205,64 +230,49 @@ if(!isset($_SESSION['admin']))
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
-                    <!-- Small boxes (Stat box) -->     
-                    <div class="row">
-
-                        <!-- ./col -->
-                        <div class="col-lg-3 col-6">
-                            <!-- small box -->
-                            <div class="small-box bg-primary">
-                                <div class="inner">
-                                    <h3>Add</h3>
-                                    <p>Notice</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-pie-graph"></i>
-                                </div>
-                                <a href="add_notice.php" class="small-box-footer">More info <i
-                                        class="fas fa-arrow-circle-right"></i></a>
+                    <!-- Small boxes (Stat box) -->
+                    <div class="container mt-5">
+                        <h2>Add Notice</h2>
+                        <form action="" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="title">Title:</label>
+                                <input type="text" class="form-control" id="title" name="notice_title" required>
                             </div>
-                        </div>
-                        <!-- ./col -->
-
-                        <!-- ./col -->
-                        <div class="col-lg-3 col-6">
-                            <!-- small box -->
-                            <div class="small-box bg-success">
-                                <div class="inner">
-                                    <h3>Teacher</h3>
-                                    <p>Details</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-pie-graph"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">More info <i
-                                        class="fas fa-arrow-circle-right"></i></a>
+                            <div class="form-group">
+                                <?php
+                                $sql1 = "select * from `class`";
+                                $result1 = mysqli_query($conn, $sql1);
+                                ?>
+                                <label for="class">Class:</label>
+                                <select class="form-control" id="class" name="class_id" required>
+                                    <?php
+                                    while ($row = mysqli_fetch_array($result1)) {
+                                        echo "<option value='" . $row['id'] . "'>" . $row['class'] . "</option>";
+                                    }
+                                    ?>
+                                    <!-- Add more options as needed -->
+                                </select>
                             </div>
-                        </div>
-                        <!-- ./col -->
-
-
-                        <div class="col-lg-3 col-6">
-                            <!-- small box -->
-                            <div class="small-box bg-info">
-                                <div class="inner">
-                                    <h3>Students</h3>
-                                    <p>Details</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-bag"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">More info <i
-                                        class="fas fa-arrow-circle-right"></i></a>
+                            <div class="form-group">
+                                <label for="visibility">Visibility:</label>
+                                <select class="form-control" id="visibility" name="visibility" required>
+                                    <option value="">Select Visibility</option>
+                                    <option value="public">Public</option>
+                                    <option value="private">Private</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="notice">Notice:</label>
+                                <textarea class="form-control" id="notice" name="notice_msg" rows="5" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="attachment">Attachment (PDF):</label>
+                                <input type="file" class="form-control-file" id="attachment" name="attachment" accept=".pdf">
                             </div>
 
-                        </div>
-                        <!-- Add more content boxes here if needed -->
-
-
+                            <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+                        </form>
                     </div>
-                    <!-- /.row -->
                 </div><!-- /.container-fluid -->
             </section>
             <!-- /.content -->
@@ -277,7 +287,7 @@ if(!isset($_SESSION['admin']))
     <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
-    $.widget.bridge('uibutton', $.ui.button)
+        $.widget.bridge('uibutton', $.ui.button)
     </script>
     <!-- Bootstrap 4 -->
     <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>

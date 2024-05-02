@@ -118,7 +118,7 @@ if(isset($_POST['signup'])){
                 <a href="#">Forgot password?</a>
               </div>
              </div>
-              <button type="submit" name="signup" class="btn btn-primary btn-block">Signup</button>
+              <a type="submit" name="signup" href="teacherlogin.php" class="btn btn-primary btn-block">Signup</a>
             </form>
           </div>
           <div class="card-footer text-center">

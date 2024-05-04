@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 12, 2024 at 01:39 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- Generation Time: May 04, 2024 at 11:40 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -34,6 +34,13 @@ CREATE TABLE `admin` (
   `gender` varchar(30) NOT NULL,
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`id`, `name`, `email`, `gender`, `password`) VALUES
+(1, 'admin', 'admin@gmail.com', 'male', 'admin');
 
 -- --------------------------------------------------------
 
@@ -64,13 +71,21 @@ INSERT INTO `class` (`id`, `class`) VALUES
 
 CREATE TABLE `notices` (
   `id` int(11) NOT NULL,
-  `creation_date` int(11) NOT NULL,
-  `notice_title` int(11) NOT NULL,
+  `creation_date` date NOT NULL,
+  `notice_title` varchar(255) NOT NULL,
   `class_id` int(11) NOT NULL,
-  `notice_msg` int(11) NOT NULL,
-  `attachment` int(11) NOT NULL,
-  `teacher_id` int(11) NOT NULL
+  `notice_msg` text NOT NULL,
+  `attachment` varchar(255) NOT NULL,
+  `teacher_id` int(11) NOT NULL,
+  `visibility` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `notices`
+--
+
+INSERT INTO `notices` (`id`, `creation_date`, `notice_title`, `class_id`, `notice_msg`, `attachment`, `teacher_id`, `visibility`) VALUES
+(2, '2024-05-04', 'scollership', 1, 'hello this is test notice', 'attachments/car parking.pdf', 1, 'private');
 
 -- --------------------------------------------------------
 
@@ -125,6 +140,12 @@ ALTER TABLE `class`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `notices`
+--
+ALTER TABLE `notices`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
@@ -138,13 +159,19 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `class`
 --
 ALTER TABLE `class`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `notices`
+--
+ALTER TABLE `notices`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `students`

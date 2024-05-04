@@ -19,19 +19,19 @@ if(isset($_POST['submit'])){
   }
 
   // Get the uploaded file information
-  $fileName = $_FILES['file']['name'];
-  $fileTmpName = $_FILES['file']['tmp_name'];
-  $fileSize = $_FILES['file']['size'];
-  $fileType = $_FILES['file']['type'];
-  $fileError = $_FILES['file']['error'];
-
+  $fileName = $_FILES['attachment']['name'];
+  $fileTmpName = $_FILES['attachment']['tmp_name'];
+  $fileSize = $_FILES['attachment']['size'];
+  $fileType = $_FILES['attachment']['type'];
+  $fileError = $_FILES['attachment']['error'];
+  $destination = $uploadDir . $fileName;
   // Check if file was uploaded without any errors
   if($fileError === 0){
       // Move the uploaded file to the desired location
-      $destination = $uploadDir . $fileName;
+   
       move_uploaded_file($fileTmpName, $destination);
   }  
-  $sql="insert into `notices` (creation_date,notice_title,class_id,notice_msg,attachment,teacher_id,visibility) values('NOW()','$notice_title','$class_id','$notice_msg','$destination','$teacher_id','$visibility')";
+  $sql="insert into `notices` ( `creation_date`, `notice_title`, `class_id`, `notice_msg`, `attachment`, `teacher_id`,`visibility`) values(NOW(),'$notice_title','$class_id','$notice_msg','$destination','$teacher_id','$visibility')";
 
   $result=mysqli_query($conn,$sql);
   if($result)
@@ -40,7 +40,7 @@ if(isset($_POST['submit'])){
   }
   else
   {
-    echo "<script>alert('Something went wrong! please try again.');</script>";
+    echo "<script>alert('Something went wrong! please try again.". mysqli_error($conn)."');</script>";
   }
 }    
 ?>

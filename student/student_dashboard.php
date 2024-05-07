@@ -132,7 +132,7 @@ if(!isset($_SESSION['student']))
 
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="./index.html" class="nav-link">
+                                    <a href="publicnotice.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Public Notice</p>
                                     </a>

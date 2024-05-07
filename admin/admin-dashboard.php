@@ -44,9 +44,7 @@ if(!isset($_SESSION['admin']))
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="index.php" class="nav-link">Home</a>
                 </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="../logout.php" class="nav-link">log out</a>
-                </li>
+                
 
             </ul>
             <!-- Right navbar links -->
@@ -75,7 +73,7 @@ if(!isset($_SESSION['admin']))
                 </li>
                 <!-- Logout button -->
                 <div class="logout-button">
-                    <button class="btn btn-danger">Logout</button>
+                    <a href="../logout.php" class="btn btn-danger">Logout</a>
                 </div>
             </ul>
         </nav>
